@@ -1,30 +1,24 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+
 const Home = () => {
-  // Danh sách ban đầu
   const [list, setList] = useState([]);
-
-  // Mảng chứa thứ tự quay cố định, lấy từ localStorage
   const [predefinedOrder, setPredefinedOrder] = useState([]);
-
   const [currentPlayer, setCurrentPlayer] = useState("");
   const [isRolling, setIsRolling] = useState(false);
   const [newPlayer, setNewPlayer] = useState("");
-  const [displayOrder, setDisplayOrder] = useState(0); // Điều khiển thứ tự quay
-  const [displayedPlayers, setDisplayedPlayers] = useState([]); // Danh sách đã hiển thị
+  const [displayOrder, setDisplayOrder] = useState(0);
+  const [displayedPlayers, setDisplayedPlayers] = useState([]);
 
-  // Load predefinedOrder from localStorage when the component is first mounted
   useEffect(() => {
     const storedOrder = JSON.parse(localStorage.getItem("myArray"));
     if (storedOrder) {
       setPredefinedOrder(storedOrder);
     } else {
-      // Nếu không có mảng trong localStorage, sử dụng mảng mặc định
       setPredefinedOrder(["11a1", "11a6", "11a3", "11a2", "11a4", "11a5"]);
     }
   }, []);
 
-  // Bắt đầu quay theo thứ tự định sẵn
   const startDisplaying = () => {
     if (displayedPlayers.length === predefinedOrder.length) {
       alert("Không còn người chơi nào trong danh sách định sẵn.");
@@ -39,7 +33,6 @@ const Home = () => {
     let counter = 0;
 
     const interval = setInterval(() => {
-      // Hiển thị người chơi theo thứ tự đã định sẵn
       setCurrentPlayer(predefinedOrder[displayOrder]);
 
       counter++;
@@ -47,19 +40,16 @@ const Home = () => {
         clearInterval(interval);
         setIsRolling(false);
 
-        // Thêm người chơi vào danh sách đã hiển thị
         setDisplayedPlayers((prevPlayers) => [
           ...prevPlayers,
           predefinedOrder[displayOrder],
         ]);
 
-        // Xóa người chơi khỏi danh sách ban đầu
         const updatedList = list.filter(
           (player) => player !== predefinedOrder[displayOrder]
         );
         setList(updatedList);
 
-        // Chuyển đến người chơi tiếp theo
         setDisplayOrder(
           (prevOrder) => (prevOrder + 1) % predefinedOrder.length
         );
@@ -67,9 +57,8 @@ const Home = () => {
     }, 100);
   };
 
-  // Thêm người chơi mới
   const addPlayer = () => {
-    const trimmedPlayer = newPlayer.trim(); // Xóa khoảng trắng 2 bên
+    const trimmedPlayer = newPlayer.trim();
     if (trimmedPlayer && !list.includes(trimmedPlayer)) {
       setList([...list, trimmedPlayer]);
       setNewPlayer("");
@@ -110,7 +99,7 @@ const Home = () => {
             Thêm
           </button>
         </div>
-        <Link to="/controller">aaaaaaaaaaaaa</Link>
+
         <ul className="mt-4 w-64 bg-white border border-gray-300 rounded-lg shadow-md">
           {list.map((player, index) => (
             <li key={index} className="border-b py-2 px-4">
@@ -136,6 +125,17 @@ const Home = () => {
             ))}
           </tbody>
         </table>
+      </div>
+
+      {/* Button Link hidden by default and only visible on hover */}
+      <div className="fixed bottom-4 right-4 group">
+        <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+          <Link to="/controller">
+            <button className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">
+              Điều khiển
+            </button>
+          </Link>
+        </div>
       </div>
     </div>
   );
