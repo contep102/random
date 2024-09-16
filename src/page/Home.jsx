@@ -128,15 +128,6 @@ const Home = () => {
       </div>
 
       {/* Button Link hidden by default and only visible on hover */}
-      <div className="fixed bottom-4 right-4 group">
-        <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-          <Link to="/controller">
-            <button className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">
-              Điều khiển
-            </button>
-          </Link>
-        </div>
-      </div>
     </div>
   );
 };
