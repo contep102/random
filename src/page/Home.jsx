@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-
+import { Link } from "react-router-dom";
 const Home = () => {
   // Danh sách ban đầu
   const [list, setList] = useState([]);
@@ -110,7 +110,7 @@ const Home = () => {
             Thêm
           </button>
         </div>
-
+        <Link to="/controller">aaaaaaaaaaaaa</Link>
         <ul className="mt-4 w-64 bg-white border border-gray-300 rounded-lg shadow-md">
           {list.map((player, index) => (
             <li key={index} className="border-b py-2 px-4">
